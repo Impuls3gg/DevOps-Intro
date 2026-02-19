@@ -1,56 +1,32 @@
 name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions
 
 on:
   push:
-    branches:
-      - feature/lab3
-  workflow_dispatch:
+  workflow_dispatch: 
 
 jobs:
-  explore-github-actions:
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-
     steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+
+      - name: System Information
+        run: |
+          echo "OS Details:"
+          cat /etc/os-release
+          echo "--------------------------------"
+          echo "CPU Info:"
+          lscpu
+          echo "--------------------------------"
+          echo "Memory Info:"
+          free -h
+
       - name: Check out repository code
         uses: actions/checkout@v4
-
-      - name: Display greeting
-        run: echo "🎉 Hello from GitHub Actions!"
-
-      - name: Display event information
-        run: |
-          echo "The job was triggered by a ${{ github.event_name }} event."
-          echo "Repository: ${{ github.repository }}"
-          echo "Branch: ${{ github.ref }}"
-          echo "Runner OS: ${{ runner.os }}"
-          echo "Workflow: ${{ github.workflow }}"
-          echo "Run ID: ${{ github.run_id }}"
-          echo "Run Number: ${{ github.run_number }}"
-          echo "Actor: ${{ github.actor }}"
-          echo "Commit SHA: ${{ github.sha }}"
-
+      
       - name: List files in the repository
-        run: |
-          echo "Files in the repository:"
-          ls -la ${{ github.workspace }}
-
-      - name: Display job status
-        run: echo "This job's status is ${{ job.status }}."
-
-      - name: Gather system information
-        run: |
-          echo "========== OS Information =========="
-          uname -a
-          cat /etc/os-release
-          echo ""
-          echo "========== CPU Information =========="
-          lscpu
-          echo ""
-          echo "========== Memory Information =========="
-          free -h
-          echo ""
-          echo "========== Disk Information =========="
-          df -h
-          echo ""
-          echo "========== Environment Variables =========="
-          env | sort
+        run: ls ${{ github.workspace }}
+      
+      - run: echo "This job's status is ${{ job.status }}."
